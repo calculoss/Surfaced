@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import TierGrid from '../components/TierGrid.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'How it works', href: '/#how' },
+  { label: 'The three tiers', href: '/#tiers' },
+  { label: 'Free estimate', href: '/estimate' },
+];
+
+const valueKinds = [
+  {
+    number: '01',
+    title: 'Cash saving',
+    body: 'A real cost removed: a bill that shrinks, a licence that stops renewing, a contract renegotiated. It shows up on your invoices, which is why it suits a gainshare fee. We only earn when the saving is verified.',
+    fit: 'Suited to gainshare',
+  },
+  {
+    number: '02',
+    title: 'Capacity saving',
+    body: 'Staff time released from re-keying, chasing and double handling. The hours are real but they land as breathing room rather than a smaller bill, so it suits a fixed fee agreed before we start.',
+    fit: 'Suited to a fixed fee',
+  },
+  {
+    number: '03',
+    title: 'Revenue gain',
+    body: 'More work completed, quoted or invoiced because the process stopped losing it. The upside is bigger and harder to attribute, so it suits a performance bonus with controls agreed in writing first.',
+    fit: 'Suited to a performance bonus',
+  },
+];
+
+const commitments = [
+  {
+    term: 'Independence',
+    detail: 'We take no supplier commissions. If a rebate or referral benefit ever exists, it is fully disclosed and offset against our fee.',
+  },
+  {
+    term: 'Client control',
+    detail: 'Nothing changes without your written approval. Every cancellation, switch and renegotiation is yours to authorise, defer or decline.',
+  },
+  {
+    term: 'Fee certainty',
+    detail: 'A fee cap is shown before any work begins. You know the worst case in dollars before you say yes.',
+  },
+  {
+    term: 'Evidence',
+    detail: 'Recommendations are based on your invoices and contracts, not on industry averages or a vendor pitch.',
+  },
+  {
+    term: 'Verification',
+    detail: 'After implementation we check the actual bills, so the saving in the register is a measured result, not an estimate left behind.',
+  },
+  {
+    term: 'Security',
+    detail: 'Your documents are handled under a written confidentiality agreement, stored securely for the engagement only, and deleted when the work ends unless you ask us to keep them.',
+  },
+];
+---
+
+<Base
+  title="Our approach · Surfaced"
+  description="How Surfaced works: start small with a verified saving, earn trust, then go deeper into software, suppliers and process. Independent, evidence-led, client-controlled."
+  navLinks={navLinks}
+>
+  <!-- Short hero -->
+  <section class="section hero">
+    <div class="container">
+      <p class="eyebrow">Our approach</p>
+      <h1 class="h2-scale">We start small, prove it, then go deeper.</h1>
+      <p class="lede">
+        Most advisory relationships open with a big promise. Ours opens with a verified saving,
+        because trust should be earned on something measurable before anything structural is
+        touched.
+      </p>
+    </div>
+  </section>
+
+  <!-- The ladder explained -->
+  <section class="section rule-top" aria-labelledby="ladder-heading">
+    <div class="container">
+      <p class="eyebrow">The ladder</p>
+      <h2 id="ladder-heading">Why the first job is the smallest one.</h2>
+      <div class="ladder-copy">
+        <p>
+          Tier one comes first because it is measurable and low-risk. Bills, contracts and licences
+          have right answers: either the saving shows up on the next invoice or it does not. It asks
+          very little of your time, changes nothing about how you operate, and gives both of us a
+          number we can stand behind. That verified number is what buys the trust the harder work
+          needs.
+        </p>
+        <p>
+          Tier three is where most of the value hides. The duplicated licence costs you hundreds; the
+          process that re-keys every order, loses quotes in inboxes or leans on one person costs you
+          far more, quietly, every week. Fixing that takes judgement about how your business actually
+          runs, and judgement is exactly what you should not hand to a stranger. So we do not ask you
+          to. We climb the ladder in order, and you decide the pace.
+        </p>
+      </div>
+      <TierGrid />
+    </div>
+  </section>
+
+  <!-- Three kinds of value -->
+  <section class="section band-paper rule-top" aria-labelledby="value-heading">
+    <div class="container">
+      <p class="eyebrow">Three kinds of value</p>
+      <h2 id="value-heading">Not every saving looks like a smaller bill.</h2>
+      <p class="lede">
+        We price each kind of value the way it behaves, so the fee model never rewards us for
+        overstating what we found.
+      </p>
+      <div class="value-grid">
+        {valueKinds.map((kind) => (
+          <div class="value-col">
+            <p class="value-number figure" aria-hidden="true">{kind.number}</p>
+            <h3>{kind.title}</h3>
+            <p class="value-body">{kind.body}</p>
+            <p class="value-fit">{kind.fit}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust architecture -->
+  <section class="section rule-top" aria-labelledby="trust-arch-heading">
+    <div class="container">
+      <p class="eyebrow">Trust architecture</p>
+      <h2 id="trust-arch-heading">The commitments we operate under.</h2>
+      <dl class="commitments">
+        {commitments.map((commitment) => (
+          <div class="commitment">
+            <dt>{commitment.term}</dt>
+            <dd>{commitment.detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <CtaPanel
+    eyebrow="Start on the first rung"
+    heading="Begin with the diagnostic."
+    body="Fixed fee, capped up front, and a savings register you keep whatever you decide next."
+  />
+</Base>
+
+<style>
+  .h2-scale {
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    max-width: 18em;
+  }
+
+  .hero .lede {
+    margin-bottom: 0;
+  }
+
+  .ladder-copy {
+    max-width: 44em;
+    margin-bottom: 52px;
+  }
+
+  .ladder-copy p {
+    color: var(--muted);
+    font-size: 16.5px;
+  }
+
+  /* Three kinds of value */
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(28px, 4vw, 56px);
+    margin-top: 48px;
+  }
+
+  .value-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brass);
+    margin: 0 0 12px;
+  }
+
+  .value-col h3 {
+    margin-bottom: 10px;
+  }
+
+  .value-body {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  .value-fit {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    border-top: 1px solid var(--line-s);
+    padding-top: 14px;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .value-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Trust architecture */
+  .commitments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(36px, 5vw, 72px);
+    margin: 44px 0 0;
+  }
+
+  .commitment {
+    border-top: 1px solid var(--line);
+    padding: 22px 0 26px;
+  }
+
+  .commitment dt {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  .commitment dd {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  @media (max-width: 720px) {
+    .commitments {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

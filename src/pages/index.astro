@@ -1,0 +1,469 @@
+---
+import Base from '../layouts/Base.astro';
+import Stat from '../components/Stat.astro';
+import TierGrid from '../components/TierGrid.astro';
+import TrustPrinciple from '../components/TrustPrinciple.astro';
+import RegisterCard from '../components/RegisterCard.astro';
+import CtaPanel from '../components/CtaPanel.astro';
+import { trustPrinciples } from '../data/tiers.js';
+
+const navLinks = [
+  { label: 'How it works', href: '#how' },
+  { label: 'The three tiers', href: '#tiers' },
+  { label: 'Our approach', href: '/approach' },
+  { label: 'Who we are', href: '#who' },
+];
+
+const stats = [
+  {
+    figure: '14%',
+    text: 'of Australian businesses reviewed their contracted internet plan last year. The rest just keep paying.',
+    source: 'ABS',
+  },
+  {
+    figure: '71%',
+    text: 'of software buyers regretted at least one recent purchase. Cost, duplication and low adoption pile up quietly.',
+    source: 'Capterra AU',
+  },
+  {
+    figure: '26%',
+    text: 'name technology and software among their largest expenses, yet few review it as one portfolio.',
+    source: 'ACCI 2025',
+  },
+];
+
+const steps = [
+  {
+    number: '01',
+    title: 'Collect the real numbers',
+    body: 'Invoices, contracts, licences and subscriptions, gathered into one honest picture of what you actually pay.',
+  },
+  {
+    number: '02',
+    title: "Surface what's leaking",
+    body: 'Duplicates, dead licences, lazy renewals and plans sized for a business you no longer are.',
+  },
+  {
+    number: '03',
+    title: 'You get a register and the controls',
+    body: 'A ranked savings register with risk and switching cost on every line. You approve each change, or none of them.',
+  },
+  {
+    number: '04',
+    title: 'We verify against your invoices',
+    body: 'After implementation we check the actual bills, so the saving is a measured fact, not a forecast.',
+  },
+];
+---
+
+<Base
+  title="Surfaced · We find the money you're already wasting"
+  description="Independent Australian technology cost and efficiency advisory. A fixed-fee diagnostic that surfaces wasted technology spend, proven against your own invoices."
+  navLinks={navLinks}
+>
+  <!-- Hero -->
+  <section class="section hero">
+    <div class="container">
+      <p class="eyebrow">Technology cost &amp; efficiency review</p>
+      <h1>We find the money you're <em class="accent">already wasting.</em></h1>
+      <p class="lede">
+        Fifty years across business process and IT, pointed at one question: where is your
+        technology spend leaking, and what would it take to stop it? We surface it, we prove it
+        against your own invoices, and you approve every change.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/contact">Book a diagnostic</a>
+        <a class="link-ghost" href="#how">See how it works</a>
+      </div>
+      <div class="hero-proof">
+        <p class="hero-chip">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Typical first review surfaces <strong class="figure">$8,000+</strong><span class="chip-unit">/yr</span>
+        </p>
+        <p class="hero-note">Independent · fee linked to savings</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem stat strip -->
+  <section class="section stats rule-top" aria-label="The scale of the problem">
+    <div class="container stat-strip">
+      {stats.map((stat) => <Stat {...stat} />)}
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section rule-top" id="how" aria-labelledby="how-heading">
+    <div class="container">
+      <p class="eyebrow">How it works</p>
+      <h2 id="how-heading">It starts with one paid diagnostic.</h2>
+      <p class="lede">
+        Not a vague free audit. A fixed-fee review, scoped up front, that pays for two senior
+        advisors to go through your technology spend line by line and hand you a decision-ready
+        savings register.
+      </p>
+
+      <div class="how-grid">
+        <ol class="steps">
+          {steps.map((step) => (
+            <li>
+              <span class="step-number figure" aria-hidden="true">{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <aside class="card diagnostic-card" aria-labelledby="diagnostic-heading">
+          <h3 id="diagnostic-heading">The diagnostic</h3>
+          <p class="diagnostic-fee">Fixed fee · scoped up front</p>
+          <p class="diagnostic-note">
+            Credited back if you proceed to implementation with us. No supplier commissions, ever.
+          </p>
+          <ul class="tick-list">
+            <li>Full spend register by supplier and renewal</li>
+            <li>Ranked savings opportunities with risk and switching cost</li>
+            <li>A short read on the process problems underneath</li>
+            <li>You decide what happens next</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- The three tiers -->
+  <section class="section band-paper rule-top" id="tiers" aria-labelledby="tiers-heading">
+    <div class="container">
+      <p class="eyebrow">The three tiers</p>
+      <h2 id="tiers-heading">Start with the bills. Stay for the thinking.</h2>
+      <p class="lede">
+        Tier one proves we can be trusted with the small, measurable things. Tier three holds the
+        deeper value most advisors cannot deliver. You climb at your own pace.
+      </p>
+      <TierGrid />
+    </div>
+  </section>
+
+  <!-- Savings register signature -->
+  <section class="section rule-top" id="approach" aria-labelledby="register-heading">
+    <div class="container">
+      <div class="centered-intro">
+        <p class="eyebrow">What you get back</p>
+        <h2 id="register-heading">A savings register, not a slide deck.</h2>
+        <p class="lede">
+          Every recommendation traces back to an invoice, and every saving is checked once the
+          change is made. This is what a sample register looks like.
+        </p>
+      </div>
+      <RegisterCard />
+      <p class="register-caveat">
+        Sample figures, shown to illustrate the format. Your register is built from your own bills.
+      </p>
+    </div>
+  </section>
+
+  <!-- Trust principles -->
+  <section class="section rule-top" aria-labelledby="trust-heading">
+    <div class="container">
+      <p class="eyebrow">Why you can trust the number</p>
+      <h2 id="trust-heading">The rules we work under.</h2>
+      <div class="principle-grid">
+        {trustPrinciples.map((principle) => <TrustPrinciple {...principle} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we are -->
+  <section class="section band-paper rule-top" id="who" aria-labelledby="who-heading">
+    <div class="container who-grid">
+      <div>
+        <p class="eyebrow">Who we are</p>
+        <p class="who-statement" id="who-heading">
+          Two senior advisors. A business analyst and a technology delivery lead, with
+          <em class="accent">fifty years between us</em> across process, systems and getting things
+          actually done.
+        </p>
+      </div>
+      <div class="who-copy">
+        <p>
+          We have spent those careers inside Australian businesses, watching money leak in the same
+          predictable places: the plan nobody renegotiated, the licences of people who left last
+          year, the tool bought twice by two different teams, the process that quietly eats a day a
+          week.
+        </p>
+        <p>
+          Surfaced is that experience pointed at your business. We start small and specific, prove
+          the saving against your own invoices, and only go deeper when you ask us to. No lock-in,
+          no transformation theatre.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <CtaPanel />
+</Base>
+
+<style>
+  .hero h1 {
+    max-width: 12em;
+    margin-bottom: 26px;
+  }
+
+  .hero .lede {
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+    margin-bottom: 46px;
+  }
+
+  .hero-proof {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  .hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 11px 20px;
+    font-size: 14.5px;
+    margin: 0;
+  }
+
+  .hero-chip strong {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .chip-unit {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .hero-note {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* Stat strip */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .stat-strip > :global(div) {
+    padding: 0 36px;
+    border-left: 1px solid var(--line);
+  }
+
+  .stat-strip > :global(div:first-child) {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  @media (max-width: 860px) {
+    .stat-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-strip > :global(div) {
+      padding: 28px 0;
+      border-left: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .stat-strip > :global(div:first-child) {
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+
+  /* How it works */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(36px, 6vw, 80px);
+    margin-top: 56px;
+    align-items: start;
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .steps li {
+    display: flex;
+    gap: 22px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line-s);
+  }
+
+  .steps li:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .step-number {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brass);
+    padding-top: 5px;
+    flex: none;
+  }
+
+  .steps h3 {
+    font-size: 19px;
+    margin-bottom: 6px;
+  }
+
+  .steps p {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .diagnostic-card {
+    padding: 34px 32px;
+  }
+
+  .diagnostic-card h3 {
+    margin-bottom: 6px;
+  }
+
+  .diagnostic-fee {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 14px;
+  }
+
+  .diagnostic-note {
+    color: var(--muted);
+    font-size: 14.5px;
+    border-bottom: 1px solid var(--line-s);
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+  }
+
+  .tick-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tick-list li {
+    position: relative;
+    padding: 8px 0 8px 30px;
+    font-size: 15px;
+  }
+
+  .tick-list li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    width: 12px;
+    height: 7px;
+    border-left: 2px solid var(--teal);
+    border-bottom: 2px solid var(--teal);
+    transform: rotate(-45deg);
+  }
+
+  @media (max-width: 860px) {
+    .how-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Register section */
+  .centered-intro {
+    text-align: center;
+    max-width: 46em;
+    margin: 0 auto 52px;
+  }
+
+  .centered-intro .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .register-caveat {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13.5px;
+    max-width: 40em;
+    margin: 22px auto 0;
+  }
+
+  /* Trust principles */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(28px, 4vw, 56px);
+    margin-top: 48px;
+  }
+
+  @media (max-width: 860px) {
+    .principle-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Who we are */
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(36px, 6vw, 90px);
+    align-items: start;
+  }
+
+  .who-statement {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: clamp(26px, 3.2vw, 38px);
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+
+  .who-copy p {
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  @media (max-width: 860px) {
+    .who-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Tiers lede spacing */
+  #tiers .lede {
+    margin-bottom: 48px;
+  }
+</style>

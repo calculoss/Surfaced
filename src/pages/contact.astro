@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro';
+import TrustPrinciple from '../components/TrustPrinciple.astro';
+import { trustPrinciples } from '../data/tiers.js';
+
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Our approach', href: '/approach' },
+  { label: 'Free estimate', href: '/estimate' },
+];
+
+// Placeholder endpoint: the owner swaps YOUR_FORM_ID for the real Formspree form ID.
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+const spendBands = [
+  'Prefer not to say',
+  'Under $25,000',
+  '$25,000 to $75,000',
+  '$75,000 to $150,000',
+  '$150,000 to $500,000',
+  'Over $500,000',
+];
+---
+
+<Base
+  title="Book a diagnostic · Surfaced"
+  description="Book a fixed-fee technology cost diagnostic with Surfaced. You approve every change, and you keep the savings register either way."
+  navLinks={navLinks}
+>
+  <section class="section hero">
+    <div class="container">
+      <p class="eyebrow">Book a diagnostic</p>
+      <h1 class="h2-scale">Tell us where it hurts.</h1>
+      <p class="lede">
+        One fixed fee, shown before we start. You approve every change, and the savings register is
+        yours to keep whatever you decide next.
+      </p>
+    </div>
+  </section>
+
+  <section class="section rule-top" aria-labelledby="form-heading">
+    <div class="container form-wrap">
+      <h2 id="form-heading" class="visually-hidden">Contact form</h2>
+
+      <form
+        id="contact-form"
+        class="card contact-form"
+        action={FORMSPREE_ENDPOINT}
+        method="POST"
+        novalidate={false}
+      >
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="business">Business name</label>
+          <input type="text" id="business" name="business" autocomplete="organization" />
+        </div>
+
+        <div class="field">
+          <label for="email">Email <span class="req">(required)</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label for="spend">Rough annual technology spend <span class="req">(optional)</span></label>
+          <select id="spend" name="annual_technology_spend">
+            {spendBands.map((band) => <option value={band}>{band}</option>)}
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">What's bothering you about your technology costs?</label>
+          <textarea id="message" name="message" rows="5"></textarea>
+        </div>
+
+        <p class="consent">
+          By sending this you agree that we may contact you about your enquiry. We do nothing else
+          with your details. See our <a href="#privacy">privacy note</a>.
+        </p>
+
+        <button type="submit" class="btn btn-primary">Send enquiry</button>
+
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Trust reassurance strip -->
+  <section class="section band-paper rule-top" aria-labelledby="reassure-heading">
+    <div class="container">
+      <p class="eyebrow">Before you press send</p>
+      <h2 id="reassure-heading">The rules we work under.</h2>
+      <div class="principle-grid">
+        {trustPrinciples.map((principle) => <TrustPrinciple {...principle} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy note -->
+  <section class="section rule-top" id="privacy" aria-labelledby="privacy-heading">
+    <div class="container privacy-note">
+      <p class="eyebrow">Privacy note</p>
+      <h2 id="privacy-heading" class="privacy-heading">What happens to what you send us.</h2>
+      <p class="muted">
+        We use the details in this form only to respond to your enquiry. They are not added to a
+        marketing list, sold, or shared with any supplier. Form submissions are processed by
+        Formspree on our behalf. During an engagement, your documents are held under a written
+        confidentiality agreement and deleted when the work ends unless you ask us to keep them. To
+        have your enquiry details removed at any time, email us and we will delete them within five
+        business days.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .h2-scale {
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+  }
+
+  .hero .lede {
+    margin-bottom: 0;
+  }
+
+  .form-wrap {
+    max-width: 640px;
+  }
+
+  .contact-form {
+    padding: clamp(28px, 5vw, 48px);
+  }
+
+  .req {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .consent {
+    font-size: 13.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line-s);
+    padding-top: 18px;
+    margin-top: 26px;
+  }
+
+  .form-status {
+    margin: 16px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .form-status.is-success {
+    color: var(--teal);
+  }
+
+  .form-status.is-error {
+    color: var(--ink);
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(28px, 4vw, 56px);
+    margin-top: 44px;
+  }
+
+  @media (max-width: 860px) {
+    .principle-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .privacy-note {
+    max-width: 760px;
+    margin-left: 0;
+  }
+
+  .privacy-heading {
+    font-size: clamp(24px, 3vw, 32px);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  // Progressive enhancement: without JavaScript the form posts to Formspree
+  // directly. With it, we submit via fetch and show inline states.
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+
+  if (form && status) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      status.className = 'form-status';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          form.reset();
+          status.textContent = "Thanks. We'll be in touch within two business days.";
+          status.className = 'form-status is-success';
+        } else {
+          throw new Error(`Formspree responded ${response.status}`);
+        }
+      } catch {
+        status.innerHTML =
+          'That didn\'t go through. Email us directly at <a href="mailto:hello@surfaced.com.au">hello@surfaced.com.au</a> and we\'ll pick it up from there.';
+        status.className = 'form-status is-error';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>

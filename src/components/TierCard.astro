@@ -1,0 +1,72 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  body: string;
+  fee: string;
+}
+const { number, title, body, fee } = Astro.props;
+---
+
+<article class="tier-card">
+  <p class="tier-eyebrow">Tier {number}</p>
+  <h3>{title}</h3>
+  <p class="tier-body">{body}</p>
+  <p class="tier-fee">
+    <span class="fee-label">Fee</span>
+    <strong>{fee}</strong>
+  </p>
+</article>
+
+<style>
+  .tier-card {
+    padding: 34px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+  }
+
+  .tier-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 14px;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+  }
+
+  .tier-body {
+    color: var(--muted);
+    font-size: 15.5px;
+    flex: 1;
+    margin-bottom: 22px;
+  }
+
+  .tier-fee {
+    border-top: 1px solid var(--line-s);
+    padding-top: 16px;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .fee-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .tier-fee strong {
+    font-size: 15px;
+    font-weight: 600;
+  }
+</style>

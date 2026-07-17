@@ -1,0 +1,48 @@
+---
+interface Props {
+  number: string;
+  label: string;
+  title: string;
+  body: string;
+}
+const { number, label, title, body } = Astro.props;
+---
+
+<div class="principle">
+  <p class="principle-label">
+    <span class="principle-number">{number}</span>
+    {label}
+  </p>
+  <h3>{title}</h3>
+  <p class="principle-body">{body}</p>
+</div>
+
+<style>
+  .principle-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .principle-number {
+    color: var(--brass);
+  }
+
+  h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+
+  .principle-body {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0;
+  }
+</style>

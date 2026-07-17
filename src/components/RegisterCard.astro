@@ -1,0 +1,225 @@
+---
+const rows = [
+  { service: 'Mobile & data plans', was: '$4,600', now: 'now $3,120', saving: '−$1,480' },
+  { service: 'Duplicate subscriptions', was: '$2,400', now: 'cancelled', saving: '−$2,400' },
+  { service: 'Hosting & backup', was: '$3,300', now: 'now $2,050', saving: '−$1,250' },
+  { service: 'Former-staff licences · 6', was: '$2,880', now: 'removed', saving: '−$2,880' },
+];
+---
+
+<div class="card register" data-register>
+  <div class="register-head">
+    <p class="register-title">Savings register · sample</p>
+    <p class="register-approved">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+        <path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Client-approved
+    </p>
+  </div>
+
+  <table>
+    <caption class="visually-hidden">Sample savings register showing illustrative annual savings by service</caption>
+    <thead class="visually-hidden">
+      <tr>
+        <th scope="col">Service</th>
+        <th scope="col">Was</th>
+        <th scope="col">Now or status</th>
+        <th scope="col">Annual saving</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr class="register-row">
+          <td class="cell-service">{row.service}</td>
+          <td class="cell-was figure">{row.was}</td>
+          <td class="cell-now figure">{row.now}</td>
+          <td class="cell-saving figure">{row.saving}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <div class="dark-panel register-total register-row">
+    <p class="total-label">Verified annual saving</p>
+    <p class="total-figure figure">$8,010<span class="total-unit">/yr</span></p>
+  </div>
+</div>
+
+<style>
+  .register {
+    max-width: 760px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .register-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--line-s);
+  }
+
+  .register-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .register-approved {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .register-row td {
+    padding: 17px 28px;
+    border-bottom: 1px solid var(--line-s);
+    font-size: 15px;
+  }
+
+  .cell-service {
+    font-weight: 500;
+  }
+
+  .cell-was,
+  .cell-now {
+    color: var(--muted);
+    font-size: 13.5px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .cell-was {
+    text-decoration: line-through;
+    text-decoration-color: rgba(90, 106, 112, 0.55);
+  }
+
+  .cell-saving {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 14px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .register-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 28px;
+    border-radius: 0;
+  }
+
+  .total-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(236, 235, 228, 0.72);
+    margin: 0;
+  }
+
+  .total-figure {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .total-unit {
+    color: var(--brass);
+    font-size: 0.62em;
+    margin-left: 2px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Reveal animation, armed by JS only so rows stay visible without it */
+  [data-register].reveal-armed .register-row {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+
+  [data-register].reveal-armed .register-row.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 560px) {
+    .register-row td {
+      padding: 15px 16px;
+    }
+
+    .register-head,
+    .register-total {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .cell-was {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const registers = document.querySelectorAll('[data-register]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  registers.forEach((register) => {
+    if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+    const rows = register.querySelectorAll('.register-row');
+    register.classList.add('reveal-armed');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          rows.forEach((row, i) => {
+            window.setTimeout(() => row.classList.add('is-visible'), i * 220);
+          });
+          observer.disconnect();
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(register);
+  });
+</script>

@@ -1,0 +1,438 @@
+---
+import Base from '../layouts/Base.astro';
+
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'How it works', href: '/#how' },
+  { label: 'Our approach', href: '/approach' },
+];
+
+// Placeholder endpoint: the owner swaps YOUR_FORM_ID for the real Formspree form ID.
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+---
+
+<Base
+  title="Savings estimate · Surfaced"
+  description="An illustrative estimate of how much technology spend your business might be wasting, based on published Australian survey ranges. Not a quote or guarantee."
+  navLinks={navLinks}
+>
+  <section class="section hero">
+    <div class="container">
+      <p class="eyebrow">Free estimate</p>
+      <h1 class="h2-scale">How much might you be wasting?</h1>
+      <p class="lede">
+        A two-minute illustration based on published Australian survey ranges. It is not a quote and
+        not a guarantee, just a sense of what a proper review tends to find.
+      </p>
+    </div>
+  </section>
+
+  <section class="section rule-top" aria-labelledby="tool-heading">
+    <div class="container tool-grid">
+      <h2 id="tool-heading" class="visually-hidden">Estimate tool</h2>
+
+      <form id="estimate-form" class="card estimate-form">
+        <p class="form-title">Your numbers</p>
+
+        <div class="field">
+          <label for="spend">Approximate annual technology spend (AUD)</label>
+          <input
+            type="number"
+            id="spend"
+            name="spend"
+            min="1000"
+            step="500"
+            inputmode="numeric"
+            placeholder="e.g. 60000"
+            required
+          />
+          <p class="hint">Telco, internet, software, hosting, devices and IT support combined. A rough figure is fine.</p>
+        </div>
+
+        <div class="field">
+          <label for="team">Team size</label>
+          <input type="number" id="team" name="team" min="1" step="1" inputmode="numeric" placeholder="e.g. 12" />
+          <p class="hint">Optional. It does not change the illustration, but it helps us frame licence exposure if you send it to us.</p>
+        </div>
+
+        <fieldset class="field reviewed-field">
+          <legend>Have you formally reviewed your telco and software contracts in the last 12 months?</legend>
+          <div class="radio-row">
+            <label class="radio-option">
+              <input type="radio" name="reviewed" value="no" checked />
+              <span>No, or not formally</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="reviewed" value="yes" />
+              <span>Yes</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Show my estimate</button>
+
+        <noscript>
+          <p class="hint noscript-note">
+            This estimate tool runs in your browser and needs JavaScript. With it switched off, the
+            quickest path to a number is to <a href="/contact">book a diagnostic</a>.
+          </p>
+        </noscript>
+      </form>
+
+      <div class="result-column">
+        <div id="result" class="dark-panel result-panel" hidden>
+          <p class="result-eyebrow">Illustrative potential saving</p>
+          <p class="result-range">
+            <span id="result-low" class="result-figure figure"></span>
+            <span class="result-to">to</span>
+            <span id="result-high" class="result-figure figure"></span>
+          </p>
+          <p class="result-unit">per year, as a range, never a single confident number</p>
+          <p id="result-assumption" class="result-assumption"></p>
+          <p class="result-disclaimer">
+            Illustrative only. Based on published Australian survey ranges, not a quote or
+            guarantee. Your actual review may find more or less.
+          </p>
+          <div class="result-cta">
+            <p>Turn this estimate into a verified number.</p>
+            <a class="btn btn-brass" href="/contact">Book a diagnostic</a>
+          </div>
+        </div>
+
+        <div id="result-placeholder" class="card result-placeholder">
+          <p class="mono-label">Your estimate appears here</p>
+          <p class="muted placeholder-copy">
+            Enter your rough annual spend, answer one question about reviews, and we will show an
+            honest range, with the assumption spelled out underneath.
+          </p>
+        </div>
+
+        <form id="capture-form" class="capture" action={FORMSPREE_ENDPOINT} method="POST" hidden>
+          <p class="capture-title">Want this breakdown by email? <span class="req">Entirely optional.</span></p>
+          <div class="capture-row">
+            <label class="visually-hidden" for="capture-email">Email address</label>
+            <input type="email" id="capture-email" name="email" placeholder="you@business.com.au" required />
+            <button type="submit" class="btn btn-primary">Send me the breakdown</button>
+          </div>
+          <input type="hidden" name="estimate_inputs" id="capture-inputs" value="" />
+          <input type="hidden" name="estimate_range" id="capture-range" value="" />
+          <p id="capture-status" class="capture-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .h2-scale {
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+  }
+
+  .hero .lede {
+    margin-bottom: 0;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .tool-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .estimate-form {
+    padding: clamp(28px, 4vw, 42px);
+  }
+
+  .form-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 24px;
+  }
+
+  .reviewed-field {
+    border: none;
+    padding: 0;
+    margin: 0 0 26px;
+  }
+
+  .reviewed-field legend {
+    font-weight: 600;
+    font-size: 15px;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+
+  .radio-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .radio-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 500;
+    font-size: 15px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 11px 16px;
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+
+  .radio-option:has(input:checked) {
+    border-color: var(--teal);
+    outline: 1.5px solid var(--teal);
+  }
+
+  .radio-option input {
+    accent-color: var(--teal);
+    margin: 0;
+  }
+
+  .noscript-note {
+    margin-top: 16px;
+  }
+
+  /* Result panel */
+  .result-panel {
+    padding: clamp(32px, 4vw, 48px);
+  }
+
+  .result-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 18px;
+  }
+
+  .result-range {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .result-figure {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 54px);
+    line-height: 1;
+    color: var(--brass);
+  }
+
+  .result-to {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: rgba(236, 235, 228, 0.72);
+  }
+
+  .result-unit {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(236, 235, 228, 0.72);
+    margin: 0 0 22px;
+  }
+
+  .result-assumption {
+    font-size: 14.5px;
+    color: rgba(236, 235, 228, 0.8);
+    border-top: 1px solid rgba(236, 235, 228, 0.14);
+    padding-top: 18px;
+  }
+
+  .result-disclaimer {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(236, 235, 228, 0.08);
+    border: 1px solid rgba(236, 235, 228, 0.18);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .result-cta {
+    border-top: 1px solid rgba(236, 235, 228, 0.14);
+    padding-top: 22px;
+    margin-top: 22px;
+  }
+
+  .result-cta p {
+    color: rgba(236, 235, 228, 0.8);
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .result-placeholder {
+    padding: clamp(28px, 4vw, 42px);
+    box-shadow: none;
+  }
+
+  .placeholder-copy {
+    font-size: 15px;
+    margin: 12px 0 0;
+  }
+
+  /* Email capture */
+  .capture {
+    margin-top: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 22px 24px;
+    background: var(--paper);
+  }
+
+  .capture-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .req {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .capture-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .capture-row input[type='email'] {
+    flex: 1 1 220px;
+  }
+
+  .capture-row .btn {
+    font-size: 14px;
+    padding: 13px 18px;
+  }
+
+  .capture-status {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 10px 0 0;
+  }
+
+  .capture-status.is-success {
+    color: var(--teal);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  // All calculation happens in the browser. Nothing is sent anywhere unless
+  // the visitor chooses the optional email form.
+  const form = document.getElementById('estimate-form') as HTMLFormElement | null;
+  const result = document.getElementById('result');
+  const placeholder = document.getElementById('result-placeholder');
+  const lowEl = document.getElementById('result-low');
+  const highEl = document.getElementById('result-high');
+  const assumptionEl = document.getElementById('result-assumption');
+  const capture = document.getElementById('capture-form') as HTMLFormElement | null;
+  const captureInputs = document.getElementById('capture-inputs') as HTMLInputElement | null;
+  const captureRange = document.getElementById('capture-range') as HTMLInputElement | null;
+  const captureStatus = document.getElementById('capture-status');
+
+  const aud = (value: number) =>
+    '$' + (Math.round(value / 100) * 100).toLocaleString('en-AU');
+
+  if (form && result && placeholder && lowEl && highEl && assumptionEl) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const spend = Number(data.get('spend'));
+      const team = data.get('team');
+      const reviewed = data.get('reviewed') === 'yes';
+
+      if (!Number.isFinite(spend) || spend <= 0) return;
+
+      const [lowPct, highPct] = reviewed ? [0.03, 0.06] : [0.08, 0.15];
+      const low = aud(spend * lowPct);
+      const high = aud(spend * highPct);
+
+      lowEl.textContent = low;
+      highEl.textContent = high;
+
+      const spendLabel = '$' + spend.toLocaleString('en-AU');
+      assumptionEl.textContent = reviewed
+        ? `Assumes an illustrative saving band of 3 to 6 per cent of your ${spendLabel} annual technology spend, the range published Australian surveys suggest for businesses that have reviewed their contracts within the last 12 months.`
+        : `Assumes an illustrative saving band of 8 to 15 per cent of your ${spendLabel} annual technology spend, the range published Australian surveys suggest for businesses that have not formally reviewed their contracts in the last 12 months.`;
+
+      placeholder.hidden = true;
+      result.hidden = false;
+
+      if (capture && captureInputs && captureRange) {
+        capture.hidden = false;
+        captureInputs.value = `Annual spend: ${spendLabel}. Team size: ${team || 'not given'}. Reviewed in last 12 months: ${reviewed ? 'yes' : 'no'}.`;
+        captureRange.value = `${low} to ${high} per year (illustrative only, not a quote or guarantee).`;
+      }
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      result.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+    });
+  }
+
+  if (capture && captureStatus) {
+    capture.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!capture.reportValidity()) return;
+
+      captureStatus.textContent = 'Sending…';
+      captureStatus.className = 'capture-status';
+
+      try {
+        const response = await fetch(capture.action, {
+          method: 'POST',
+          body: new FormData(capture),
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error(`Formspree responded ${response.status}`);
+        captureStatus.textContent = 'Done. The breakdown is on its way.';
+        captureStatus.className = 'capture-status is-success';
+        capture.reset();
+      } catch {
+        captureStatus.innerHTML =
+          'That didn\'t send. You can email us at <a href="mailto:hello@surfaced.com.au">hello@surfaced.com.au</a> instead.';
+        captureStatus.className = 'capture-status';
+      }
+    });
+  }
+</script>

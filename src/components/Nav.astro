@@ -1,0 +1,164 @@
+---
+interface Link {
+  label: string;
+  href: string;
+}
+interface Props {
+  links: Link[];
+}
+const { links } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a class="wordmark" href="/" aria-label="Surfaced, home">
+      <svg class="ring-mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+        <circle cx="13" cy="13" r="11" fill="none" stroke="var(--teal)" stroke-width="2.2" />
+        <circle cx="13" cy="13" r="3.4" fill="var(--brass)" />
+      </svg>
+      <span>Surfaced</span>
+    </a>
+
+    <nav aria-label="Main">
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        Menu
+      </button>
+      <ul id="nav-links" class="nav-links">
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="btn btn-primary nav-cta" href="/contact">Book a diagnostic</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  nav {
+    margin-left: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 26px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .nav-links a:hover {
+    color: var(--teal);
+  }
+
+  .nav-cta {
+    font-size: 15px;
+    padding: 12px 20px;
+    white-space: nowrap;
+  }
+
+  .nav-toggle {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  @media (max-width: 860px) {
+    .nav-inner {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    nav {
+      display: contents;
+    }
+
+    .nav-toggle {
+      display: inline-block;
+      order: 2;
+      margin-left: auto;
+    }
+
+    .nav-cta {
+      order: 3;
+      padding: 11px 16px;
+      font-size: 14px;
+    }
+
+    .nav-links {
+      display: none;
+      order: 4;
+      flex-basis: 100%;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--line-s);
+      padding-top: 6px;
+    }
+
+    .nav-links.is-open {
+      display: flex;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 12px 2px;
+      border-bottom: 1px solid var(--line-s);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const list = document.getElementById('nav-links');
+  if (toggle && list) {
+    toggle.addEventListener('click', () => {
+      const open = list.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+</script>

@@ -1,0 +1,61 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a class="wordmark" href="/" aria-label="Surfaced, home">
+      <svg class="ring-mark" width="22" height="22" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+        <circle cx="13" cy="13" r="11" fill="none" stroke="var(--teal)" stroke-width="2.2" />
+        <circle cx="13" cy="13" r="3.4" fill="var(--brass)" />
+      </svg>
+      <span>Surfaced</span>
+    </a>
+    <p class="tagline">Independent technology cost &amp; efficiency advisory · Australia</p>
+  </div>
+  <div class="container">
+    <p class="fineprint">© {year} Surfaced. Sample figures on this site are illustrative, not client results.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 44px 0 36px;
+    margin-top: 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .tagline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .fineprint {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 18px 0 0;
+  }
+</style>
