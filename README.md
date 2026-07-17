@@ -54,4 +54,6 @@ To connect the domain:
 2. At your DNS provider, add the four GitHub Pages apex `A` records (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153), and optionally a `www` CNAME to `<owner>.github.io`.
 3. Wait for the DNS check to pass, then tick **Enforce HTTPS**.
 
-Until the domain is connected, preview the site locally (`npm run dev`) or via the repository's GitHub Pages URL. Note: if the site is ever served from a project subpath (`https://<owner>.github.io/<repo-name>/`) instead of a custom domain, change `base` in `astro.config.mjs` to `'/<repo-name>/'`.
+Until the domain is connected, preview the site locally (`npm run dev`) or via the GitHub Pages URL (`https://calculoss.github.io/Surfaced/`).
+
+**Current base setting:** `base` in `astro.config.mjs` is temporarily set to `'/Surfaced/'` so the Pages preview URL works fully. When the custom domain is connected, change it back to `'/'` and redeploy. All internal links go through `src/lib/withBase.js`, so no other change is needed in either direction.

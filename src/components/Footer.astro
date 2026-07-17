@@ -1,10 +1,12 @@
 ---
+import { withBase } from '../lib/withBase.js';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <a class="wordmark" href="/" aria-label="Surfaced, home">
+    <a class="wordmark" href={withBase('/')} aria-label="Surfaced, home">
       <svg class="ring-mark" width="22" height="22" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
         <circle cx="13" cy="13" r="11" fill="none" stroke="var(--teal)" stroke-width="2.2" />
         <circle cx="13" cy="13" r="3.4" fill="var(--brass)" />

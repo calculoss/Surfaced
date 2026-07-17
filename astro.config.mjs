@@ -1,10 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Built for the root custom domain. If the site is ever served from a
-// project subpath instead, change base to '/<repo-name>/'.
+// Target is the root custom domain (site + base '/'). Until the domain is
+// connected, base is set to the project subpath so the GitHub Pages preview
+// at calculoss.github.io/Surfaced/ works fully. When surfaced.com.au is
+// connected in the Pages settings, change base back to '/'.
 export default defineConfig({
   site: 'https://surfaced.com.au',
-  base: '/',
+  base: '/Surfaced/',
   output: 'static',
 });

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/withBase.js';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -74,7 +75,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
         <noscript>
           <p class="hint noscript-note">
             This estimate tool runs in your browser and needs JavaScript. With it switched off, the
-            quickest path to a number is to <a href="/contact">book a diagnostic</a>.
+            quickest path to a number is to <a href={withBase('/contact')}>book a diagnostic</a>.
           </p>
         </noscript>
       </form>
@@ -95,7 +96,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
           </p>
           <div class="result-cta">
             <p>Turn this estimate into a verified number.</p>
-            <a class="btn btn-brass" href="/contact">Book a diagnostic</a>
+            <a class="btn btn-brass" href={withBase('/contact')}>Book a diagnostic</a>
           </div>
         </div>
 

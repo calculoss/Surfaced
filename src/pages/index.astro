@@ -6,6 +6,7 @@ import TrustPrinciple from '../components/TrustPrinciple.astro';
 import RegisterCard from '../components/RegisterCard.astro';
 import CtaPanel from '../components/CtaPanel.astro';
 import { trustPrinciples } from '../data/tiers.js';
+import { withBase } from '../lib/withBase.js';
 
 const navLinks = [
   { label: 'How it works', href: '#how' },
@@ -72,7 +73,7 @@ const steps = [
         against your own invoices, and you approve every change.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="/contact">Book a diagnostic</a>
+        <a class="btn btn-primary" href={withBase('/contact')}>Book a diagnostic</a>
         <a class="link-ghost" href="#how">See how it works</a>
       </div>
       <div class="hero-proof">

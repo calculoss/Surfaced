@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/withBase.js';
+
 interface Props {
   eyebrow?: string;
   heading?: string;
@@ -17,7 +19,7 @@ const {
       <p class="cta-eyebrow">{eyebrow}</p>
       <h2 id="cta-heading">{heading}</h2>
       <p class="cta-body">{body}</p>
-      <a class="btn btn-brass" href="/contact">Book a diagnostic</a>
+      <a class="btn btn-brass" href={withBase('/contact')}>Book a diagnostic</a>
     </div>
   </div>
 </section>
